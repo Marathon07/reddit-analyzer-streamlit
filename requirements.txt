@@ -3,3 +3,4 @@ praw
 google-generativeai
 pandas
 pytz
+openai
