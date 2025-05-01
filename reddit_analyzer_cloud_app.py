@@ -237,12 +237,12 @@ with st.sidebar:
     model_display_names = list(available_ai_models.keys()); selected_model_display_name = st.selectbox("选择 AI 模型:", options=model_display_names, index=0, key="model_selector", help="选择 AI 模型。注意 Gemini Pro Exp 免费层级限制严格！")
     selected_model_details = available_ai_models[selected_model_display_name]; selected_provider = selected_model_details["provider"]; selected_model_id = selected_model_details["model_id"]
     st.markdown("---"); st.markdown(f"**当前选择模型:**"); st.markdown(f"- 名称: `{selected_model_display_name}`"); st.markdown(f"- ID: `{selected_model_id}`"); st.markdown(f"- 提供商: `{selected_provider}`"); st.markdown("---")
-    REDDIT_CLIENT_ID=os.environ.get.get("REDDIT_CLIENT_ID"); REDDIT_CLIENT_SECRET=os.environ.get.get("REDDIT_CLIENT_SECRET"); REDDIT_USER_AGENT=os.environ.get.get("REDDIT_USER_AGENT"); reddit_client_instance=None
+    REDDIT_CLIENT_ID=os.environ.get("REDDIT_CLIENT_ID"); REDDIT_CLIENT_SECRET=os.environ.get("REDDIT_CLIENT_SECRET"); REDDIT_USER_AGENT=os.environ.get("REDDIT_USER_AGENT"); reddit_client_instance=None
     if not REDDIT_CLIENT_ID or not REDDIT_CLIENT_SECRET or not REDDIT_USER_AGENT: st.error("错误：Reddit API 凭证未完整配置。")
     else:
         try: reddit_client_instance=praw.Reddit(client_id=REDDIT_CLIENT_ID,client_secret=REDDIT_CLIENT_SECRET,user_agent=REDDIT_USER_AGENT,read_only=True); st.success("Reddit API 凭证已加载。")
         except Exception as praw_e: st.error(f"初始化 Reddit PRAW 客户端时出错: {praw_e}"); reddit_client_instance=None
-    GEMINI_API_KEY=os.environ.get.get("GEMINI_API_KEY"); QWEN_API_KEY=os.environ.get.get("DASHSCOPE_API_KEY"); gemini_configured=False; qwen_configured=False; ai_configured_successfully=False; active_client_instance=None; active_api_key=None
+    GEMINI_API_KEY=os.environ.get("GEMINI_API_KEY"); QWEN_API_KEY=os.environ.get("DASHSCOPE_API_KEY"); gemini_configured=False; qwen_configured=False; ai_configured_successfully=False; active_client_instance=None; active_api_key=None
     if selected_provider=="Gemini":
         if google_ai_available and GEMINI_API_KEY:
             try: genai.configure(api_key=GEMINI_API_KEY); active_client_instance=genai; active_api_key=GEMINI_API_KEY; gemini_configured=True; ai_configured_successfully=True; st.success(f"Gemini (模型: {selected_model_id}) 配置成功！")
